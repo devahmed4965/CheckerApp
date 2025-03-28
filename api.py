@@ -1,7 +1,7 @@
 from fastapi import FastAPI, HTTPException, Depends
 from pydantic import BaseModel
 from sqlalchemy.orm import Session
-from models import SessionLocal, Employee, Shipment, Attendance  # Make sure Attendance is defined in models.py
+from models import SessionLocal, Employee, Shipment, Attendance, Company, Task, OperationTaskMessage  # Ensure all models exist
 import datetime
 from typing import Optional
 
@@ -75,19 +75,43 @@ def create_employee(emp: EmployeeCreate, db: Session = Depends(get_db)):
     db.refresh(new_emp)
     return {"id": new_emp.id, "name": new_emp.name}
 
-# Endpoint to search for a shipment by shipment number
-@app.get("/shipments/{shipment_id}")
+# Updated Shipment response model (for search)
+class ShipmentResponse(BaseModel):
+    id: int
+    shipment_id: str
+    status: str
+    checked: bool
+    imported: bool
+    inspected_date: Optional[datetime.datetime] = None
+    inspected_by: Optional[str] = None
+
+    class Config:
+        orm_mode = True
+
+# Endpoint to search for a shipment by its shipment number.
+# It returns shipment details along with the inspection date and inspector's name.
+@app.get("/shipments/{shipment_id}", response_model=ShipmentResponse)
 def get_shipment(shipment_id: str, db: Session = Depends(get_db)):
     shipment = db.query(Shipment).filter(Shipment.shipment_id == shipment_id).first()
     if shipment is None:
         raise HTTPException(status_code=404, detail="Shipment not found")
-    return {
-        "id": shipment.id,
-        "shipment_id": shipment.shipment_id,
-        "status": shipment.status,
-        "checked": shipment.checked,
-        "imported": shipment.imported
-    }
+    
+    # Retrieve inspector's name if shipment.inspected_by is set
+    inspector_name = None
+    if shipment.inspected_by:
+        inspector = db.query(Employee).filter(Employee.id == shipment.inspected_by).first()
+        if inspector:
+            inspector_name = inspector.name
+
+    return ShipmentResponse(
+        id=shipment.id,
+        shipment_id=shipment.shipment_id,
+        status=shipment.status,
+        checked=shipment.checked,
+        imported=shipment.imported,
+        inspected_date=shipment.inspected_date,
+        inspected_by=inspector_name
+    )
 
 # Model for recording attendance (request)
 class AttendanceRecord(BaseModel):
@@ -104,6 +128,9 @@ class AttendanceResponse(BaseModel):
     timestamp: datetime.datetime
     latitude: Optional[float] = None
     longitude: Optional[float] = None
+
+    class Config:
+        orm_mode = True
 
 # Endpoint for recording attendance
 @app.post("/attendance/", response_model=AttendanceResponse)
@@ -136,8 +163,6 @@ class CompanySettings(BaseModel):
 
 @app.post("/company/update_settings/")
 def update_company_settings(settings: CompanySettings, db: Session = Depends(get_db)):
-    # Implementation depends on your models and logic.
-    # For example, find the company by id, update the fields, commit, etc.
     company = db.query(Company).filter_by(id=settings.company_id).first()
     if not company:
         raise HTTPException(status_code=404, detail="Company not found")
@@ -152,7 +177,7 @@ def update_company_settings(settings: CompanySettings, db: Session = Depends(get
     except Exception as e:
         db.rollback()
         raise HTTPException(status_code=500, detail=f"Error updating settings: {e}")
-    return
+    return {"detail": "Settings updated successfully"}
 
 # Endpoint for creating tasks
 class TaskCreate(BaseModel):
@@ -165,6 +190,9 @@ class TaskResponse(BaseModel):
     id: int
     title: str
     status: str
+
+    class Config:
+        orm_mode = True
 
 @app.post("/tasks/", response_model=TaskResponse)
 def create_task(task: TaskCreate, db: Session = Depends(get_db)):
@@ -186,10 +214,15 @@ class TaskMessageResponse(BaseModel):
     sender_id: int
     message: str
 
+    class Config:
+        orm_mode = True
+
 @app.post("/tasks/messages/", response_model=TaskMessageResponse)
 def add_task_message(msg: TaskMessageCreate, db: Session = Depends(get_db)):
-    new_msg = TaskMessage(task_id=msg.task_id, sender_id=msg.sender_id, message=msg.message)
+    new_msg = OperationTaskMessage(task_id=msg.task_id, sender_id=msg.sender_id, message=msg.message)
     db.add(new_msg)
     db.commit()
     db.refresh(new_msg)
     return new_msg
+
+# If you want to add more endpoints, do so here.
