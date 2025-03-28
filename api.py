@@ -1,26 +1,25 @@
 from fastapi import FastAPI, HTTPException, Depends
 from pydantic import BaseModel
 from sqlalchemy.orm import Session
-from models import SessionLocal, Employee, Shipment, Attendance  # تأكد من أن Attendance معرف في models.py
+from models import SessionLocal, Employee, Shipment, Attendance  # Make sure Attendance is defined in models.py
 import datetime
 from typing import Optional
 
-
 app = FastAPI()
 
-# عند بدء التشغيل، نطبع قائمة المسارات للتأكد من تحميلها
+# Print registered routes on startup
 @app.on_event("startup")
 def print_routes():
     print("Registered routes:")
     for route in app.routes:
         print(route.path)
 
-# نقطة النهاية الجذرية للتأكد من تشغيل التطبيق
+# Root endpoint to verify the app is running
 @app.get("/")
 def read_root():
     return {"message": "App is running"}
 
-# دالة الاعتماد لإدارة جلسة قاعدة البيانات
+# Dependency for database session
 def get_db():
     db = SessionLocal()
     try:
@@ -29,10 +28,10 @@ def get_db():
         db.close()
 
 # -----------------------------
-# نقاط النهاية الخاصة بالتطبيق
+# Endpoints for the application
 # -----------------------------
 
-# نموذج بيانات تسجيل الدخول
+# Login models
 class LoginRequest(BaseModel):
     username: str
     password: str
@@ -44,13 +43,11 @@ class LoginResponse(BaseModel):
     role: str
     company_id: int
 
-# نقطة نهاية تسجيل الدخول
 @app.post("/login/", response_model=LoginResponse)
 def login(login_req: LoginRequest, db: Session = Depends(get_db)):
     user = db.query(Employee).filter_by(username=login_req.username).first()
     if not user or not user.check_password(login_req.password):
         raise HTTPException(status_code=401, detail="Invalid login credentials")
-    # التحقق من معرّف الشركة في حالة عدم كون المستخدم مالكًا
     if user.role != "owner" and user.company_id != login_req.company_id:
         raise HTTPException(status_code=401, detail="Invalid login credentials")
     return LoginResponse(
@@ -60,13 +57,12 @@ def login(login_req: LoginRequest, db: Session = Depends(get_db)):
         company_id=user.company_id
     )
 
-# نموذج بيانات إنشاء موظف جديد
+# Model for creating an employee
 class EmployeeCreate(BaseModel):
     name: str
     username: str
     password: str
 
-# نقطة نهاية إنشاء موظف جديد
 @app.post("/employees/")
 def create_employee(emp: EmployeeCreate, db: Session = Depends(get_db)):
     existing = db.query(Employee).filter_by(username=emp.username).first()
@@ -79,7 +75,7 @@ def create_employee(emp: EmployeeCreate, db: Session = Depends(get_db)):
     db.refresh(new_emp)
     return {"id": new_emp.id, "name": new_emp.name}
 
-# نقطة نهاية البحث عن شحنة بواسطة رقم الشحنة
+# Endpoint to search for a shipment by shipment number
 @app.get("/shipments/{shipment_id}")
 def get_shipment(shipment_id: str, db: Session = Depends(get_db)):
     shipment = db.query(Shipment).filter(Shipment.shipment_id == shipment_id).first()
@@ -93,15 +89,24 @@ def get_shipment(shipment_id: str, db: Session = Depends(get_db)):
         "imported": shipment.imported
     }
 
-# نموذج بيانات تسجيل الحضور والانصراف
+# Model for recording attendance (request)
 class AttendanceRecord(BaseModel):
     employee_id: int
-    check_type: str  # "check-in" أو "check-out"
+    check_type: str  # "check-in" or "check-out"
     latitude: Optional[float] = None
     longitude: Optional[float] = None
 
-# نقطة نهاية تسجيل الحضور / الانصراف
-@app.post("/attendance/", response_model=AttendanceRecord)
+# Model for attendance response (includes id and timestamp)
+class AttendanceResponse(BaseModel):
+    id: int
+    employee_id: int
+    check_type: str
+    timestamp: datetime.datetime
+    latitude: Optional[float] = None
+    longitude: Optional[float] = None
+
+# Endpoint for recording attendance
+@app.post("/attendance/", response_model=AttendanceResponse)
 def record_attendance(record: AttendanceRecord, db: Session = Depends(get_db)):
     new_record = Attendance(
         employee_id=record.employee_id,
@@ -114,12 +119,77 @@ def record_attendance(record: AttendanceRecord, db: Session = Depends(get_db)):
         db.add(new_record)
         db.commit()
         db.refresh(new_record)
-        return {
-            "employee_id": new_record.employee_id,
-            "check_type": new_record.check_type,
-            "latitude": new_record.latitude,
-            "longitude": new_record.longitude,
-        }
+        return new_record
     except Exception as e:
         db.rollback()
         raise HTTPException(status_code=500, detail=f"Error recording attendance: {e}")
+
+# Model for company settings (if used)
+class CompanySettings(BaseModel):
+    company_id: int
+    working_start: str
+    working_end: str
+    geo_latitude: float
+    geo_longitude: float
+    geo_radius: float
+    company_address: Optional[str] = None
+
+@app.post("/company/update_settings/")
+def update_company_settings(settings: CompanySettings, db: Session = Depends(get_db)):
+    # Implementation depends on your models and logic.
+    # For example, find the company by id, update the fields, commit, etc.
+    company = db.query(Company).filter_by(id=settings.company_id).first()
+    if not company:
+        raise HTTPException(status_code=404, detail="Company not found")
+    company.working_start = settings.working_start
+    company.working_end = settings.working_end
+    company.geo_latitude = settings.geo_latitude
+    company.geo_longitude = settings.geo_longitude
+    company.geo_radius = settings.geo_radius
+    company.company_address = settings.company_address
+    try:
+        db.commit()
+    except Exception as e:
+        db.rollback()
+        raise HTTPException(status_code=500, detail=f"Error updating settings: {e}")
+    return
+
+# Endpoint for creating tasks
+class TaskCreate(BaseModel):
+    title: str
+    description: str = ""
+    created_by: int
+    assigned_to: int
+
+class TaskResponse(BaseModel):
+    id: int
+    title: str
+    status: str
+
+@app.post("/tasks/", response_model=TaskResponse)
+def create_task(task: TaskCreate, db: Session = Depends(get_db)):
+    new_task = Task(title=task.title, description=task.description, created_by=task.created_by, assigned_to=task.assigned_to)
+    db.add(new_task)
+    db.commit()
+    db.refresh(new_task)
+    return new_task
+
+# Endpoint for adding task messages
+class TaskMessageCreate(BaseModel):
+    task_id: int
+    sender_id: int
+    message: str
+
+class TaskMessageResponse(BaseModel):
+    id: int
+    task_id: int
+    sender_id: int
+    message: str
+
+@app.post("/tasks/messages/", response_model=TaskMessageResponse)
+def add_task_message(msg: TaskMessageCreate, db: Session = Depends(get_db)):
+    new_msg = TaskMessage(task_id=msg.task_id, sender_id=msg.sender_id, message=msg.message)
+    db.add(new_msg)
+    db.commit()
+    db.refresh(new_msg)
+    return new_msg
