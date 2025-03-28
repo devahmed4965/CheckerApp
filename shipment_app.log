@@ -1,0 +1,368 @@
+2025-03-06 06:35:10,094:INFO:select pg_catalog.version()
+2025-03-06 06:35:10,095:INFO:[raw sql] {}
+2025-03-06 06:35:10,442:INFO:select current_schema()
+2025-03-06 06:35:10,443:INFO:[raw sql] {}
+2025-03-06 06:35:10,787:INFO:show standard_conforming_strings
+2025-03-06 06:35:10,788:INFO:[raw sql] {}
+2025-03-06 06:35:11,135:INFO:BEGIN (implicit)
+2025-03-06 06:35:11,145:INFO:SELECT pg_catalog.pg_class.relname 
+FROM pg_catalog.pg_class JOIN pg_catalog.pg_namespace ON pg_catalog.pg_namespace.oid = pg_catalog.pg_class.relnamespace 
+WHERE pg_catalog.pg_class.relname = %(table_name)s AND pg_catalog.pg_class.relkind = ANY (ARRAY[%(param_1)s, %(param_2)s, %(param_3)s, %(param_4)s, %(param_5)s]) AND pg_catalog.pg_table_is_visible(pg_catalog.pg_class.oid) AND pg_catalog.pg_namespace.nspname != %(nspname_1)s
+2025-03-06 06:35:11,147:INFO:[generated in 0.00112s] {'table_name': 'companies', 'param_1': 'r', 'param_2': 'p', 'param_3': 'f', 'param_4': 'v', 'param_5': 'm', 'nspname_1': 'pg_catalog'}
+2025-03-06 06:35:11,502:INFO:SELECT pg_catalog.pg_class.relname 
+FROM pg_catalog.pg_class JOIN pg_catalog.pg_namespace ON pg_catalog.pg_namespace.oid = pg_catalog.pg_class.relnamespace 
+WHERE pg_catalog.pg_class.relname = %(table_name)s AND pg_catalog.pg_class.relkind = ANY (ARRAY[%(param_1)s, %(param_2)s, %(param_3)s, %(param_4)s, %(param_5)s]) AND pg_catalog.pg_table_is_visible(pg_catalog.pg_class.oid) AND pg_catalog.pg_namespace.nspname != %(nspname_1)s
+2025-03-06 06:35:11,503:INFO:[cached since 0.3576s ago] {'table_name': 'employees', 'param_1': 'r', 'param_2': 'p', 'param_3': 'f', 'param_4': 'v', 'param_5': 'm', 'nspname_1': 'pg_catalog'}
+2025-03-06 06:35:11,672:INFO:SELECT pg_catalog.pg_class.relname 
+FROM pg_catalog.pg_class JOIN pg_catalog.pg_namespace ON pg_catalog.pg_namespace.oid = pg_catalog.pg_class.relnamespace 
+WHERE pg_catalog.pg_class.relname = %(table_name)s AND pg_catalog.pg_class.relkind = ANY (ARRAY[%(param_1)s, %(param_2)s, %(param_3)s, %(param_4)s, %(param_5)s]) AND pg_catalog.pg_table_is_visible(pg_catalog.pg_class.oid) AND pg_catalog.pg_namespace.nspname != %(nspname_1)s
+2025-03-06 06:35:11,672:INFO:[cached since 0.5265s ago] {'table_name': 'shipments', 'param_1': 'r', 'param_2': 'p', 'param_3': 'f', 'param_4': 'v', 'param_5': 'm', 'nspname_1': 'pg_catalog'}
+2025-03-06 06:35:11,843:INFO:SELECT pg_catalog.pg_class.relname 
+FROM pg_catalog.pg_class JOIN pg_catalog.pg_namespace ON pg_catalog.pg_namespace.oid = pg_catalog.pg_class.relnamespace 
+WHERE pg_catalog.pg_class.relname = %(table_name)s AND pg_catalog.pg_class.relkind = ANY (ARRAY[%(param_1)s, %(param_2)s, %(param_3)s, %(param_4)s, %(param_5)s]) AND pg_catalog.pg_table_is_visible(pg_catalog.pg_class.oid) AND pg_catalog.pg_namespace.nspname != %(nspname_1)s
+2025-03-06 06:35:11,844:INFO:[cached since 0.6983s ago] {'table_name': 'employee_activities', 'param_1': 'r', 'param_2': 'p', 'param_3': 'f', 'param_4': 'v', 'param_5': 'm', 'nspname_1': 'pg_catalog'}
+2025-03-06 06:35:12,014:INFO:SELECT pg_catalog.pg_class.relname 
+FROM pg_catalog.pg_class JOIN pg_catalog.pg_namespace ON pg_catalog.pg_namespace.oid = pg_catalog.pg_class.relnamespace 
+WHERE pg_catalog.pg_class.relname = %(table_name)s AND pg_catalog.pg_class.relkind = ANY (ARRAY[%(param_1)s, %(param_2)s, %(param_3)s, %(param_4)s, %(param_5)s]) AND pg_catalog.pg_table_is_visible(pg_catalog.pg_class.oid) AND pg_catalog.pg_namespace.nspname != %(nspname_1)s
+2025-03-06 06:35:12,014:INFO:[cached since 0.8684s ago] {'table_name': 'unmatched_shipments', 'param_1': 'r', 'param_2': 'p', 'param_3': 'f', 'param_4': 'v', 'param_5': 'm', 'nspname_1': 'pg_catalog'}
+2025-03-06 06:35:12,183:INFO:COMMIT
+2025-03-06 06:35:12,374:INFO:BEGIN (implicit)
+2025-03-06 06:35:12,378:INFO:SELECT companies.id AS companies_id, companies.name AS companies_name 
+FROM companies 
+WHERE companies.id = %(id_1)s 
+ LIMIT %(param_1)s
+2025-03-06 06:35:12,379:INFO:[generated in 0.00077s] {'id_1': 1, 'param_1': 1}
+2025-03-06 06:35:12,725:INFO:SELECT employees.id AS employees_id, employees.name AS employees_name, employees.username AS employees_username, employees.password_hash AS employees_password_hash, employees.password_plain AS employees_password_plain, employees.role AS employees_role, employees.company_id AS employees_company_id 
+FROM employees 
+WHERE employees.role = %(role_1)s 
+ LIMIT %(param_1)s
+2025-03-06 06:35:12,726:INFO:[generated in 0.00104s] {'role_1': 'owner', 'param_1': 1}
+2025-03-06 06:35:12,901:INFO:ROLLBACK
+2025-03-06 06:35:13,071:INFO:BEGIN (implicit)
+2025-03-06 06:35:13,073:INFO:SELECT employees.id AS employees_id, employees.name AS employees_name, employees.username AS employees_username, employees.password_hash AS employees_password_hash, employees.password_plain AS employees_password_plain, employees.role AS employees_role, employees.company_id AS employees_company_id 
+FROM employees
+2025-03-06 06:35:13,074:INFO:[generated in 0.00076s] {}
+2025-03-06 06:35:13,413:INFO:ROLLBACK
+2025-03-06 06:35:29,617:INFO:BEGIN (implicit)
+2025-03-06 06:35:29,619:INFO:SELECT employees.id AS employees_id, employees.name AS employees_name, employees.username AS employees_username, employees.password_hash AS employees_password_hash, employees.password_plain AS employees_password_plain, employees.role AS employees_role, employees.company_id AS employees_company_id 
+FROM employees 
+WHERE employees.username = %(username_1)s 
+ LIMIT %(param_1)s
+2025-03-06 06:35:29,620:INFO:[generated in 0.00058s] {'username_1': '01006409514', 'param_1': 1}
+2025-03-06 06:35:29,952:INFO:ROLLBACK
+2025-03-06 06:35:41,004:INFO:BEGIN (implicit)
+2025-03-06 06:35:41,014:INFO:INSERT INTO shipments (shipment_id, status, checked, imported, employee_id, inspected_date, inspected_by) SELECT p0::VARCHAR, p1::VARCHAR, p2::BOOLEAN, p3::BOOLEAN, p4::INTEGER, p5::TIMESTAMP WITHOUT TIME ZONE, p6::INTEGER FROM (VALUES (%(shipment_id ... 278 characters truncated ...  p2, p3, p4, p5, p6, sen_counter) ORDER BY sen_counter RETURNING shipments.id, shipments.id AS id__1
+2025-03-06 06:35:41,014:INFO:[generated in 0.00028s (insertmanyvalues) 1/1 (ordered)] {'inspected_date__0': None, 'employee_id__0': 3, 'checked__0': False, 'shipment_id__0': '123456', 'inspected_by__0': None, 'status__0': 'Line', 'imported__0': True, 'inspected_date__1': None, 'employee_id__1': 3, 'checked__1': False, 'shipment_id__1': '654321', 'inspected_by__1': None, 'status__1': 'Return', 'imported__1': True}
+2025-03-06 06:35:41,370:INFO:COMMIT
+2025-03-06 06:35:45,828:INFO:BEGIN (implicit)
+2025-03-06 06:35:45,831:INFO:SELECT shipments.id AS shipments_id, shipments.shipment_id AS shipments_shipment_id, shipments.status AS shipments_status, shipments.checked AS shipments_checked, shipments.imported AS shipments_imported, shipments.employee_id AS shipments_employee_id, shipments.inspected_date AS shipments_inspected_date, shipments.inspected_by AS shipments_inspected_by 
+FROM shipments 
+WHERE shipments.shipment_id = %(shipment_id_1)s ORDER BY shipments.id DESC 
+ LIMIT %(param_1)s
+2025-03-06 06:35:45,832:INFO:[generated in 0.00082s] {'shipment_id_1': '123456', 'param_1': 1}
+2025-03-06 06:35:46,172:INFO:UPDATE shipments SET checked=%(checked)s, inspected_date=%(inspected_date)s, inspected_by=%(inspected_by)s WHERE shipments.id = %(shipments_id)s
+2025-03-06 06:35:46,173:INFO:[generated in 0.00075s] {'checked': True, 'inspected_date': datetime.datetime(2025, 3, 6, 6, 35, 45, 827229), 'inspected_by': 3, 'shipments_id': 191}
+2025-03-06 06:35:46,345:INFO:COMMIT
+2025-03-06 06:35:46,515:ERROR:Error playing sound: No such file or directory: 'C:\Users\noweg\Documents\Checker V1.5.1\line_sound.mp3'.
+2025-03-06 06:35:55,425:INFO:BEGIN (implicit)
+2025-03-06 06:35:55,427:INFO:SELECT shipments.id AS shipments_id, shipments.shipment_id AS shipments_shipment_id, shipments.status AS shipments_status, shipments.checked AS shipments_checked, shipments.imported AS shipments_imported, shipments.employee_id AS shipments_employee_id, shipments.inspected_date AS shipments_inspected_date, shipments.inspected_by AS shipments_inspected_by 
+FROM shipments 
+WHERE shipments.shipment_id = %(shipment_id_1)s ORDER BY shipments.id DESC 
+ LIMIT %(param_1)s
+2025-03-06 06:35:55,428:INFO:[cached since 9.597s ago] {'shipment_id_1': '123456', 'param_1': 1}
+2025-03-06 06:35:55,770:INFO:UPDATE shipments SET inspected_date=%(inspected_date)s WHERE shipments.id = %(shipments_id)s
+2025-03-06 06:35:55,770:INFO:[generated in 0.00075s] {'inspected_date': datetime.datetime(2025, 3, 6, 6, 35, 55, 424910), 'shipments_id': 191}
+2025-03-06 06:35:55,940:INFO:COMMIT
+2025-03-06 06:35:56,141:ERROR:Error playing sound: No such file or directory: 'C:\Users\noweg\Documents\Checker V1.5.1\line_sound.mp3'.
+2025-03-06 06:35:58,412:INFO:BEGIN (implicit)
+2025-03-06 06:35:58,415:INFO:SELECT shipments.id AS shipments_id, shipments.shipment_id AS shipments_shipment_id, shipments.status AS shipments_status, shipments.checked AS shipments_checked, shipments.imported AS shipments_imported, shipments.employee_id AS shipments_employee_id, shipments.inspected_date AS shipments_inspected_date, shipments.inspected_by AS shipments_inspected_by 
+FROM shipments 
+WHERE shipments.shipment_id = %(shipment_id_1)s ORDER BY shipments.id DESC 
+ LIMIT %(param_1)s
+2025-03-06 06:35:58,415:INFO:[cached since 12.58s ago] {'shipment_id_1': '654321', 'param_1': 1}
+2025-03-06 06:35:58,751:INFO:UPDATE shipments SET checked=%(checked)s, inspected_date=%(inspected_date)s, inspected_by=%(inspected_by)s WHERE shipments.id = %(shipments_id)s
+2025-03-06 06:35:58,751:INFO:[cached since 12.58s ago] {'checked': True, 'inspected_date': datetime.datetime(2025, 3, 6, 6, 35, 58, 411837), 'inspected_by': 3, 'shipments_id': 192}
+2025-03-06 06:35:58,919:INFO:COMMIT
+2025-03-06 06:35:59,091:ERROR:Error playing sound: No such file or directory: 'C:\Users\noweg\Documents\Checker V1.5.1\return_sound.mp3'.
+2025-03-06 06:37:08,398:INFO:BEGIN (implicit)
+2025-03-06 06:37:08,399:INFO:SELECT pg_catalog.pg_class.relname 
+FROM pg_catalog.pg_class JOIN pg_catalog.pg_namespace ON pg_catalog.pg_namespace.oid = pg_catalog.pg_class.relnamespace 
+WHERE pg_catalog.pg_class.relname = %(table_name)s AND pg_catalog.pg_class.relkind = ANY (ARRAY[%(param_1)s, %(param_2)s, %(param_3)s, %(param_4)s, %(param_5)s]) AND pg_catalog.pg_table_is_visible(pg_catalog.pg_class.oid) AND pg_catalog.pg_namespace.nspname != %(nspname_1)s
+2025-03-06 06:37:08,400:INFO:[cached since 117.3s ago] {'table_name': 'companies', 'param_1': 'r', 'param_2': 'p', 'param_3': 'f', 'param_4': 'v', 'param_5': 'm', 'nspname_1': 'pg_catalog'}
+2025-03-06 06:37:08,748:INFO:SELECT pg_catalog.pg_class.relname 
+FROM pg_catalog.pg_class JOIN pg_catalog.pg_namespace ON pg_catalog.pg_namespace.oid = pg_catalog.pg_class.relnamespace 
+WHERE pg_catalog.pg_class.relname = %(table_name)s AND pg_catalog.pg_class.relkind = ANY (ARRAY[%(param_1)s, %(param_2)s, %(param_3)s, %(param_4)s, %(param_5)s]) AND pg_catalog.pg_table_is_visible(pg_catalog.pg_class.oid) AND pg_catalog.pg_namespace.nspname != %(nspname_1)s
+2025-03-06 06:37:08,749:INFO:[cached since 117.6s ago] {'table_name': 'employees', 'param_1': 'r', 'param_2': 'p', 'param_3': 'f', 'param_4': 'v', 'param_5': 'm', 'nspname_1': 'pg_catalog'}
+2025-03-06 06:37:08,918:INFO:SELECT pg_catalog.pg_class.relname 
+FROM pg_catalog.pg_class JOIN pg_catalog.pg_namespace ON pg_catalog.pg_namespace.oid = pg_catalog.pg_class.relnamespace 
+WHERE pg_catalog.pg_class.relname = %(table_name)s AND pg_catalog.pg_class.relkind = ANY (ARRAY[%(param_1)s, %(param_2)s, %(param_3)s, %(param_4)s, %(param_5)s]) AND pg_catalog.pg_table_is_visible(pg_catalog.pg_class.oid) AND pg_catalog.pg_namespace.nspname != %(nspname_1)s
+2025-03-06 06:37:08,918:INFO:[cached since 117.8s ago] {'table_name': 'shipments', 'param_1': 'r', 'param_2': 'p', 'param_3': 'f', 'param_4': 'v', 'param_5': 'm', 'nspname_1': 'pg_catalog'}
+2025-03-06 06:37:09,095:INFO:SELECT pg_catalog.pg_class.relname 
+FROM pg_catalog.pg_class JOIN pg_catalog.pg_namespace ON pg_catalog.pg_namespace.oid = pg_catalog.pg_class.relnamespace 
+WHERE pg_catalog.pg_class.relname = %(table_name)s AND pg_catalog.pg_class.relkind = ANY (ARRAY[%(param_1)s, %(param_2)s, %(param_3)s, %(param_4)s, %(param_5)s]) AND pg_catalog.pg_table_is_visible(pg_catalog.pg_class.oid) AND pg_catalog.pg_namespace.nspname != %(nspname_1)s
+2025-03-06 06:37:09,095:INFO:[cached since 117.9s ago] {'table_name': 'employee_activities', 'param_1': 'r', 'param_2': 'p', 'param_3': 'f', 'param_4': 'v', 'param_5': 'm', 'nspname_1': 'pg_catalog'}
+2025-03-06 06:37:09,267:INFO:SELECT pg_catalog.pg_class.relname 
+FROM pg_catalog.pg_class JOIN pg_catalog.pg_namespace ON pg_catalog.pg_namespace.oid = pg_catalog.pg_class.relnamespace 
+WHERE pg_catalog.pg_class.relname = %(table_name)s AND pg_catalog.pg_class.relkind = ANY (ARRAY[%(param_1)s, %(param_2)s, %(param_3)s, %(param_4)s, %(param_5)s]) AND pg_catalog.pg_table_is_visible(pg_catalog.pg_class.oid) AND pg_catalog.pg_namespace.nspname != %(nspname_1)s
+2025-03-06 06:37:09,268:INFO:[cached since 118.1s ago] {'table_name': 'unmatched_shipments', 'param_1': 'r', 'param_2': 'p', 'param_3': 'f', 'param_4': 'v', 'param_5': 'm', 'nspname_1': 'pg_catalog'}
+2025-03-06 06:37:09,439:INFO:COMMIT
+2025-03-06 06:37:09,623:INFO:BEGIN (implicit)
+2025-03-06 06:37:09,626:INFO:SELECT companies.id AS companies_id, companies.name AS companies_name 
+FROM companies 
+WHERE companies.id = %(id_1)s 
+ LIMIT %(param_1)s
+2025-03-06 06:37:09,630:INFO:[cached since 117.3s ago] {'id_1': 1, 'param_1': 1}
+2025-03-06 06:37:09,963:INFO:SELECT employees.id AS employees_id, employees.name AS employees_name, employees.username AS employees_username, employees.password_hash AS employees_password_hash, employees.password_plain AS employees_password_plain, employees.role AS employees_role, employees.company_id AS employees_company_id 
+FROM employees 
+WHERE employees.role = %(role_1)s 
+ LIMIT %(param_1)s
+2025-03-06 06:37:09,963:INFO:[cached since 117.2s ago] {'role_1': 'owner', 'param_1': 1}
+2025-03-06 06:37:10,138:INFO:ROLLBACK
+2025-03-06 06:37:10,315:INFO:BEGIN (implicit)
+2025-03-06 06:37:10,316:INFO:SELECT employees.id AS employees_id, employees.name AS employees_name, employees.username AS employees_username, employees.password_hash AS employees_password_hash, employees.password_plain AS employees_password_plain, employees.role AS employees_role, employees.company_id AS employees_company_id 
+FROM employees
+2025-03-06 06:37:10,319:INFO:[cached since 117.2s ago] {}
+2025-03-06 06:37:10,657:INFO:ROLLBACK
+2025-03-06 06:37:24,494:INFO:BEGIN (implicit)
+2025-03-06 06:37:24,498:INFO:SELECT employees.id AS employees_id, employees.name AS employees_name, employees.username AS employees_username, employees.password_hash AS employees_password_hash, employees.password_plain AS employees_password_plain, employees.role AS employees_role, employees.company_id AS employees_company_id 
+FROM employees 
+WHERE employees.username = %(username_1)s 
+ LIMIT %(param_1)s
+2025-03-06 06:37:24,498:INFO:[cached since 114.9s ago] {'username_1': 'mostafa012', 'param_1': 1}
+2025-03-06 06:37:24,850:INFO:ROLLBACK
+2025-03-06 06:37:26,188:DEBUG:STREAM b'IHDR' 16 13
+2025-03-06 06:37:26,192:DEBUG:STREAM b'IDAT' 41 15235
+2025-03-06 06:37:26,193:DEBUG:STREAM b'IHDR' 16 13
+2025-03-06 06:37:26,193:DEBUG:STREAM b'IDAT' 41 15235
+2025-03-06 06:37:26,215:DEBUG:STREAM b'IHDR' 16 13
+2025-03-06 06:37:26,215:DEBUG:STREAM b'sBIT' 41 4
+2025-03-06 06:37:26,216:DEBUG:b'sBIT' 41 4 (unknown)
+2025-03-06 06:37:26,216:DEBUG:STREAM b'pHYs' 57 9
+2025-03-06 06:37:26,216:DEBUG:STREAM b'tEXt' 78 25
+2025-03-06 06:37:26,217:DEBUG:STREAM b'IDAT' 115 8192
+2025-03-06 06:37:26,217:DEBUG:STREAM b'IHDR' 16 13
+2025-03-06 06:37:26,217:DEBUG:STREAM b'sBIT' 41 4
+2025-03-06 06:37:26,218:DEBUG:b'sBIT' 41 4 (unknown)
+2025-03-06 06:37:26,218:DEBUG:STREAM b'pHYs' 57 9
+2025-03-06 06:37:26,218:DEBUG:STREAM b'tEXt' 78 25
+2025-03-06 06:37:26,218:DEBUG:STREAM b'IDAT' 115 8192
+2025-03-06 06:37:26,239:DEBUG:STREAM b'IHDR' 16 13
+2025-03-06 06:37:26,240:DEBUG:STREAM b'IDAT' 41 8192
+2025-03-06 06:37:26,244:DEBUG:STREAM b'IHDR' 16 13
+2025-03-06 06:37:26,245:DEBUG:STREAM b'IDAT' 41 8192
+2025-03-06 06:37:26,265:DEBUG:Importing BlpImagePlugin
+2025-03-06 06:37:26,271:DEBUG:Importing BmpImagePlugin
+2025-03-06 06:37:26,271:DEBUG:Importing BufrStubImagePlugin
+2025-03-06 06:37:26,274:DEBUG:Importing CurImagePlugin
+2025-03-06 06:37:26,281:DEBUG:Importing DcxImagePlugin
+2025-03-06 06:37:26,287:DEBUG:Importing DdsImagePlugin
+2025-03-06 06:37:26,302:DEBUG:Importing EpsImagePlugin
+2025-03-06 06:37:26,306:DEBUG:Importing FitsImagePlugin
+2025-03-06 06:37:26,313:DEBUG:Importing FliImagePlugin
+2025-03-06 06:37:26,315:DEBUG:Importing FpxImagePlugin
+2025-03-06 06:37:26,319:DEBUG:Image: failed to import FpxImagePlugin: No module named 'olefile'
+2025-03-06 06:37:26,321:DEBUG:Importing FtexImagePlugin
+2025-03-06 06:37:26,328:DEBUG:Importing GbrImagePlugin
+2025-03-06 06:37:26,332:DEBUG:Importing GifImagePlugin
+2025-03-06 06:37:26,332:DEBUG:Importing GribStubImagePlugin
+2025-03-06 06:37:26,336:DEBUG:Importing Hdf5StubImagePlugin
+2025-03-06 06:37:26,338:DEBUG:Importing IcnsImagePlugin
+2025-03-06 06:37:26,356:DEBUG:Importing IcoImagePlugin
+2025-03-06 06:37:26,366:DEBUG:Importing ImImagePlugin
+2025-03-06 06:37:26,369:DEBUG:Importing ImtImagePlugin
+2025-03-06 06:37:26,373:DEBUG:Importing IptcImagePlugin
+2025-03-06 06:37:26,381:DEBUG:Importing JpegImagePlugin
+2025-03-06 06:37:26,381:DEBUG:Importing Jpeg2KImagePlugin
+2025-03-06 06:37:26,381:DEBUG:Importing McIdasImagePlugin
+2025-03-06 06:37:26,384:DEBUG:Importing MicImagePlugin
+2025-03-06 06:37:26,388:DEBUG:Image: failed to import MicImagePlugin: No module named 'olefile'
+2025-03-06 06:37:26,388:DEBUG:Importing MpegImagePlugin
+2025-03-06 06:37:26,391:DEBUG:Importing MpoImagePlugin
+2025-03-06 06:37:26,407:DEBUG:Importing MspImagePlugin
+2025-03-06 06:37:26,413:DEBUG:Importing PalmImagePlugin
+2025-03-06 06:37:26,420:DEBUG:Importing PcdImagePlugin
+2025-03-06 06:37:26,422:DEBUG:Importing PcxImagePlugin
+2025-03-06 06:37:26,422:DEBUG:Importing PdfImagePlugin
+2025-03-06 06:37:26,448:DEBUG:Importing PixarImagePlugin
+2025-03-06 06:37:26,451:DEBUG:Importing PngImagePlugin
+2025-03-06 06:37:26,451:DEBUG:Importing PpmImagePlugin
+2025-03-06 06:37:26,451:DEBUG:Importing PsdImagePlugin
+2025-03-06 06:37:26,455:DEBUG:Importing QoiImagePlugin
+2025-03-06 06:37:26,485:DEBUG:Importing SgiImagePlugin
+2025-03-06 06:37:26,490:DEBUG:Importing SpiderImagePlugin
+2025-03-06 06:37:26,494:DEBUG:Importing SunImagePlugin
+2025-03-06 06:37:26,497:DEBUG:Importing TgaImagePlugin
+2025-03-06 06:37:26,502:DEBUG:Importing TiffImagePlugin
+2025-03-06 06:37:26,502:DEBUG:Importing WebPImagePlugin
+2025-03-06 06:37:26,610:DEBUG:Importing WmfImagePlugin
+2025-03-06 06:37:26,612:DEBUG:Importing XbmImagePlugin
+2025-03-06 06:37:26,625:DEBUG:Importing XpmImagePlugin
+2025-03-06 06:37:26,629:DEBUG:Importing XVThumbImagePlugin
+2025-03-06 06:37:26,679:DEBUG:STREAM b'IHDR' 16 13
+2025-03-06 06:37:26,679:DEBUG:STREAM b'IDAT' 41 8192
+2025-03-06 06:37:26,680:DEBUG:STREAM b'IHDR' 16 13
+2025-03-06 06:37:26,680:DEBUG:STREAM b'IDAT' 41 8192
+2025-03-06 06:37:27,163:INFO:BEGIN (implicit)
+2025-03-06 06:37:27,182:INFO:SELECT count(*) AS count_1 
+FROM (SELECT employees.id AS employees_id, employees.name AS employees_name, employees.username AS employees_username, employees.password_hash AS employees_password_hash, employees.password_plain AS employees_password_plain, employees.role AS employees_role, employees.company_id AS employees_company_id 
+FROM employees 
+WHERE employees.company_id = %(company_id_1)s) AS anon_1
+2025-03-06 06:37:27,184:INFO:[generated in 0.00280s] {'company_id_1': 212606}
+2025-03-06 06:37:27,537:INFO:SELECT count(*) AS count_1 
+FROM (SELECT shipments.id AS shipments_id, shipments.shipment_id AS shipments_shipment_id, shipments.status AS shipments_status, shipments.checked AS shipments_checked, shipments.imported AS shipments_imported, shipments.employee_id AS shipments_employee_id, shipments.inspected_date AS shipments_inspected_date, shipments.inspected_by AS shipments_inspected_by 
+FROM shipments JOIN employees ON shipments.employee_id = employees.id 
+WHERE employees.company_id = %(company_id_1)s) AS anon_1
+2025-03-06 06:37:27,538:INFO:[generated in 0.00141s] {'company_id_1': 212606}
+2025-03-06 06:37:27,750:INFO:SELECT count(*) AS count_1 
+FROM (SELECT shipments.id AS shipments_id, shipments.shipment_id AS shipments_shipment_id, shipments.status AS shipments_status, shipments.checked AS shipments_checked, shipments.imported AS shipments_imported, shipments.employee_id AS shipments_employee_id, shipments.inspected_date AS shipments_inspected_date, shipments.inspected_by AS shipments_inspected_by 
+FROM shipments JOIN employees ON shipments.employee_id = employees.id 
+WHERE employees.company_id = %(company_id_1)s AND shipments.checked = true) AS anon_1
+2025-03-06 06:37:27,751:INFO:[generated in 0.00090s] {'company_id_1': 212606}
+2025-03-06 06:37:27,919:INFO:ROLLBACK
+2025-03-06 06:37:28,090:INFO:BEGIN (implicit)
+2025-03-06 06:37:28,092:INFO:SELECT employees.id AS employees_id, employees.name AS employees_name, employees.username AS employees_username, employees.password_hash AS employees_password_hash, employees.password_plain AS employees_password_plain, employees.role AS employees_role, employees.company_id AS employees_company_id 
+FROM employees 
+WHERE employees.company_id = %(company_id_1)s AND employees.role = %(role_1)s
+2025-03-06 06:37:28,092:INFO:[generated in 0.00082s] {'company_id_1': 212606, 'role_1': 'employee'}
+2025-03-06 06:37:28,428:INFO:ROLLBACK
+2025-03-06 06:37:35,204:INFO:BEGIN (implicit)
+2025-03-06 06:37:35,212:INFO:SELECT shipments.id AS shipments_id, shipments.shipment_id AS shipments_shipment_id, shipments.status AS shipments_status, shipments.checked AS shipments_checked, shipments.imported AS shipments_imported, shipments.employee_id AS shipments_employee_id, shipments.inspected_date AS shipments_inspected_date, shipments.inspected_by AS shipments_inspected_by 
+FROM shipments 
+WHERE shipments.shipment_id = %(shipment_id_1)s 
+ LIMIT %(param_1)s
+2025-03-06 06:37:35,214:INFO:[generated in 0.00094s] {'shipment_id_1': '123456', 'param_1': 1}
+2025-03-06 06:37:35,549:INFO:ROLLBACK
+2025-03-06 06:37:35,718:INFO:BEGIN (implicit)
+2025-03-06 06:37:35,721:INFO:SELECT employees.id AS employees_id, employees.name AS employees_name, employees.username AS employees_username, employees.password_hash AS employees_password_hash, employees.password_plain AS employees_password_plain, employees.role AS employees_role, employees.company_id AS employees_company_id 
+FROM employees 
+WHERE employees.id = %(id_1)s 
+ LIMIT %(param_1)s
+2025-03-06 06:37:35,722:INFO:[generated in 0.00104s] {'id_1': 3, 'param_1': 1}
+2025-03-06 06:37:36,068:INFO:ROLLBACK
+2025-03-06 06:37:46,546:INFO:BEGIN (implicit)
+2025-03-06 06:37:46,547:INFO:SELECT pg_catalog.pg_class.relname 
+FROM pg_catalog.pg_class JOIN pg_catalog.pg_namespace ON pg_catalog.pg_namespace.oid = pg_catalog.pg_class.relnamespace 
+WHERE pg_catalog.pg_class.relname = %(table_name)s AND pg_catalog.pg_class.relkind = ANY (ARRAY[%(param_1)s, %(param_2)s, %(param_3)s, %(param_4)s, %(param_5)s]) AND pg_catalog.pg_table_is_visible(pg_catalog.pg_class.oid) AND pg_catalog.pg_namespace.nspname != %(nspname_1)s
+2025-03-06 06:37:46,548:INFO:[cached since 155.4s ago] {'table_name': 'companies', 'param_1': 'r', 'param_2': 'p', 'param_3': 'f', 'param_4': 'v', 'param_5': 'm', 'nspname_1': 'pg_catalog'}
+2025-03-06 06:37:46,896:INFO:SELECT pg_catalog.pg_class.relname 
+FROM pg_catalog.pg_class JOIN pg_catalog.pg_namespace ON pg_catalog.pg_namespace.oid = pg_catalog.pg_class.relnamespace 
+WHERE pg_catalog.pg_class.relname = %(table_name)s AND pg_catalog.pg_class.relkind = ANY (ARRAY[%(param_1)s, %(param_2)s, %(param_3)s, %(param_4)s, %(param_5)s]) AND pg_catalog.pg_table_is_visible(pg_catalog.pg_class.oid) AND pg_catalog.pg_namespace.nspname != %(nspname_1)s
+2025-03-06 06:37:46,905:INFO:[cached since 155.8s ago] {'table_name': 'employees', 'param_1': 'r', 'param_2': 'p', 'param_3': 'f', 'param_4': 'v', 'param_5': 'm', 'nspname_1': 'pg_catalog'}
+2025-03-06 06:37:47,085:INFO:SELECT pg_catalog.pg_class.relname 
+FROM pg_catalog.pg_class JOIN pg_catalog.pg_namespace ON pg_catalog.pg_namespace.oid = pg_catalog.pg_class.relnamespace 
+WHERE pg_catalog.pg_class.relname = %(table_name)s AND pg_catalog.pg_class.relkind = ANY (ARRAY[%(param_1)s, %(param_2)s, %(param_3)s, %(param_4)s, %(param_5)s]) AND pg_catalog.pg_table_is_visible(pg_catalog.pg_class.oid) AND pg_catalog.pg_namespace.nspname != %(nspname_1)s
+2025-03-06 06:37:47,091:INFO:[cached since 155.9s ago] {'table_name': 'shipments', 'param_1': 'r', 'param_2': 'p', 'param_3': 'f', 'param_4': 'v', 'param_5': 'm', 'nspname_1': 'pg_catalog'}
+2025-03-06 06:37:47,270:INFO:SELECT pg_catalog.pg_class.relname 
+FROM pg_catalog.pg_class JOIN pg_catalog.pg_namespace ON pg_catalog.pg_namespace.oid = pg_catalog.pg_class.relnamespace 
+WHERE pg_catalog.pg_class.relname = %(table_name)s AND pg_catalog.pg_class.relkind = ANY (ARRAY[%(param_1)s, %(param_2)s, %(param_3)s, %(param_4)s, %(param_5)s]) AND pg_catalog.pg_table_is_visible(pg_catalog.pg_class.oid) AND pg_catalog.pg_namespace.nspname != %(nspname_1)s
+2025-03-06 06:37:47,279:INFO:[cached since 156.1s ago] {'table_name': 'employee_activities', 'param_1': 'r', 'param_2': 'p', 'param_3': 'f', 'param_4': 'v', 'param_5': 'm', 'nspname_1': 'pg_catalog'}
+2025-03-06 06:37:47,448:INFO:SELECT pg_catalog.pg_class.relname 
+FROM pg_catalog.pg_class JOIN pg_catalog.pg_namespace ON pg_catalog.pg_namespace.oid = pg_catalog.pg_class.relnamespace 
+WHERE pg_catalog.pg_class.relname = %(table_name)s AND pg_catalog.pg_class.relkind = ANY (ARRAY[%(param_1)s, %(param_2)s, %(param_3)s, %(param_4)s, %(param_5)s]) AND pg_catalog.pg_table_is_visible(pg_catalog.pg_class.oid) AND pg_catalog.pg_namespace.nspname != %(nspname_1)s
+2025-03-06 06:37:47,449:INFO:[cached since 156.3s ago] {'table_name': 'unmatched_shipments', 'param_1': 'r', 'param_2': 'p', 'param_3': 'f', 'param_4': 'v', 'param_5': 'm', 'nspname_1': 'pg_catalog'}
+2025-03-06 06:37:47,628:INFO:COMMIT
+2025-03-06 06:37:47,801:INFO:BEGIN (implicit)
+2025-03-06 06:37:47,803:INFO:SELECT companies.id AS companies_id, companies.name AS companies_name 
+FROM companies 
+WHERE companies.id = %(id_1)s 
+ LIMIT %(param_1)s
+2025-03-06 06:37:47,806:INFO:[cached since 155.4s ago] {'id_1': 1, 'param_1': 1}
+2025-03-06 06:37:48,154:INFO:SELECT employees.id AS employees_id, employees.name AS employees_name, employees.username AS employees_username, employees.password_hash AS employees_password_hash, employees.password_plain AS employees_password_plain, employees.role AS employees_role, employees.company_id AS employees_company_id 
+FROM employees 
+WHERE employees.role = %(role_1)s 
+ LIMIT %(param_1)s
+2025-03-06 06:37:48,155:INFO:[cached since 155.4s ago] {'role_1': 'owner', 'param_1': 1}
+2025-03-06 06:37:48,327:INFO:ROLLBACK
+2025-03-06 06:37:48,498:INFO:BEGIN (implicit)
+2025-03-06 06:37:48,498:INFO:SELECT employees.id AS employees_id, employees.name AS employees_name, employees.username AS employees_username, employees.password_hash AS employees_password_hash, employees.password_plain AS employees_password_plain, employees.role AS employees_role, employees.company_id AS employees_company_id 
+FROM employees
+2025-03-06 06:37:48,500:INFO:[cached since 155.4s ago] {}
+2025-03-06 06:37:48,836:INFO:ROLLBACK
+2025-03-06 06:38:00,840:INFO:BEGIN (implicit)
+2025-03-06 06:38:00,841:INFO:SELECT employees.id AS employees_id, employees.name AS employees_name, employees.username AS employees_username, employees.password_hash AS employees_password_hash, employees.password_plain AS employees_password_plain, employees.role AS employees_role, employees.company_id AS employees_company_id 
+FROM employees 
+WHERE employees.username = %(username_1)s 
+ LIMIT %(param_1)s
+2025-03-06 06:38:00,842:INFO:[cached since 151.2s ago] {'username_1': '01006409514', 'param_1': 1}
+2025-03-06 06:38:01,191:INFO:ROLLBACK
+2025-03-06 06:38:22,302:INFO:BEGIN (implicit)
+2025-03-06 06:38:22,303:INFO:INSERT INTO shipments (shipment_id, status, checked, imported, employee_id, inspected_date, inspected_by) SELECT p0::VARCHAR, p1::VARCHAR, p2::BOOLEAN, p3::BOOLEAN, p4::INTEGER, p5::TIMESTAMP WITHOUT TIME ZONE, p6::INTEGER FROM (VALUES (%(shipment_id ... 415 characters truncated ...  p2, p3, p4, p5, p6, sen_counter) ORDER BY sen_counter RETURNING shipments.id, shipments.id AS id__1
+2025-03-06 06:38:22,304:INFO:[cached since 161.3s ago (insertmanyvalues) 1/1 (ordered)] {'inspected_date__0': None, 'employee_id__0': 3, 'checked__0': False, 'shipment_id__0': '123456', 'inspected_by__0': None, 'status__0': 'Line', 'imported__0': True, 'inspected_date__1': None, 'employee_id__1': 3, 'checked__1': False, 'shipment_id__1': '1234567', 'inspected_by__1': None, 'status__1': 'Line', 'imported__1': True, 'inspected_date__2': None, 'employee_id__2': 3, 'checked__2': False, 'shipment_id__2': '654321', 'inspected_by__2': None, 'status__2': 'Return', 'imported__2': True}
+2025-03-06 06:38:22,644:INFO:COMMIT
+2025-03-06 06:38:27,781:INFO:BEGIN (implicit)
+2025-03-06 06:38:27,782:INFO:SELECT shipments.id AS shipments_id, shipments.shipment_id AS shipments_shipment_id, shipments.status AS shipments_status, shipments.checked AS shipments_checked, shipments.imported AS shipments_imported, shipments.employee_id AS shipments_employee_id, shipments.inspected_date AS shipments_inspected_date, shipments.inspected_by AS shipments_inspected_by 
+FROM shipments 
+WHERE shipments.shipment_id = %(shipment_id_1)s ORDER BY shipments.id DESC 
+ LIMIT %(param_1)s
+2025-03-06 06:38:27,783:INFO:[cached since 162s ago] {'shipment_id_1': '123456', 'param_1': 1}
+2025-03-06 06:38:28,133:INFO:UPDATE shipments SET checked=%(checked)s, inspected_date=%(inspected_date)s, inspected_by=%(inspected_by)s WHERE shipments.id = %(shipments_id)s
+2025-03-06 06:38:28,134:INFO:[cached since 162s ago] {'checked': True, 'inspected_date': datetime.datetime(2025, 3, 6, 6, 38, 27, 780120), 'inspected_by': 3, 'shipments_id': 193}
+2025-03-06 06:38:28,306:INFO:COMMIT
+2025-03-06 06:38:28,484:ERROR:Error playing sound: No such file or directory: 'C:\Users\noweg\Documents\Checker V1.5.1\line_sound.mp3'.
+2025-03-06 06:38:35,201:INFO:BEGIN (implicit)
+2025-03-06 06:38:35,202:INFO:SELECT shipments.id AS shipments_id, shipments.shipment_id AS shipments_shipment_id, shipments.status AS shipments_status, shipments.checked AS shipments_checked, shipments.imported AS shipments_imported, shipments.employee_id AS shipments_employee_id, shipments.inspected_date AS shipments_inspected_date, shipments.inspected_by AS shipments_inspected_by 
+FROM shipments 
+WHERE shipments.shipment_id = %(shipment_id_1)s ORDER BY shipments.id DESC 
+ LIMIT %(param_1)s
+2025-03-06 06:38:35,203:INFO:[cached since 169.4s ago] {'shipment_id_1': '654321', 'param_1': 1}
+2025-03-06 06:38:35,543:INFO:UPDATE shipments SET checked=%(checked)s, inspected_date=%(inspected_date)s, inspected_by=%(inspected_by)s WHERE shipments.id = %(shipments_id)s
+2025-03-06 06:38:35,544:INFO:[cached since 169.4s ago] {'checked': True, 'inspected_date': datetime.datetime(2025, 3, 6, 6, 38, 35, 200405), 'inspected_by': 3, 'shipments_id': 195}
+2025-03-06 06:38:35,713:INFO:COMMIT
+2025-03-06 06:38:35,880:ERROR:Error playing sound: No such file or directory: 'C:\Users\noweg\Documents\Checker V1.5.1\return_sound.mp3'.
+2025-03-06 06:38:38,148:ERROR:Error playing sound: No such file or directory: 'C:\Users\noweg\Documents\Checker V1.5.1\unsimilar.mp3'.
+2025-03-06 06:38:38,148:INFO:BEGIN (implicit)
+2025-03-06 06:38:38,151:INFO:INSERT INTO unmatched_shipments (shipment_id, date, employee_id) VALUES (%(shipment_id)s, %(date)s, %(employee_id)s) RETURNING unmatched_shipments.id
+2025-03-06 06:38:38,151:INFO:[generated in 0.00078s] {'shipment_id': '1111111', 'date': datetime.datetime(2025, 3, 6, 6, 38, 38, 151035), 'employee_id': 3}
+2025-03-06 06:38:38,508:INFO:COMMIT
+2025-03-07 23:09:40,895:INFO:select pg_catalog.version()
+2025-03-07 23:09:40,899:INFO:[raw sql] {}
+2025-03-07 23:09:41,302:INFO:select current_schema()
+2025-03-07 23:09:41,303:INFO:[raw sql] {}
+2025-03-07 23:09:41,708:INFO:show standard_conforming_strings
+2025-03-07 23:09:41,710:INFO:[raw sql] {}
+2025-03-07 23:09:42,081:INFO:BEGIN (implicit)
+2025-03-07 23:09:42,089:INFO:SELECT pg_catalog.pg_class.relname 
+FROM pg_catalog.pg_class JOIN pg_catalog.pg_namespace ON pg_catalog.pg_namespace.oid = pg_catalog.pg_class.relnamespace 
+WHERE pg_catalog.pg_class.relname = %(table_name)s AND pg_catalog.pg_class.relkind = ANY (ARRAY[%(param_1)s, %(param_2)s, %(param_3)s, %(param_4)s, %(param_5)s]) AND pg_catalog.pg_table_is_visible(pg_catalog.pg_class.oid) AND pg_catalog.pg_namespace.nspname != %(nspname_1)s
+2025-03-07 23:09:42,090:INFO:[generated in 0.00109s] {'table_name': 'companies', 'param_1': 'r', 'param_2': 'p', 'param_3': 'f', 'param_4': 'v', 'param_5': 'm', 'nspname_1': 'pg_catalog'}
+2025-03-07 23:09:42,425:INFO:SELECT pg_catalog.pg_class.relname 
+FROM pg_catalog.pg_class JOIN pg_catalog.pg_namespace ON pg_catalog.pg_namespace.oid = pg_catalog.pg_class.relnamespace 
+WHERE pg_catalog.pg_class.relname = %(table_name)s AND pg_catalog.pg_class.relkind = ANY (ARRAY[%(param_1)s, %(param_2)s, %(param_3)s, %(param_4)s, %(param_5)s]) AND pg_catalog.pg_table_is_visible(pg_catalog.pg_class.oid) AND pg_catalog.pg_namespace.nspname != %(nspname_1)s
+2025-03-07 23:09:42,426:INFO:[cached since 0.3367s ago] {'table_name': 'employees', 'param_1': 'r', 'param_2': 'p', 'param_3': 'f', 'param_4': 'v', 'param_5': 'm', 'nspname_1': 'pg_catalog'}
+2025-03-07 23:09:42,634:INFO:SELECT pg_catalog.pg_class.relname 
+FROM pg_catalog.pg_class JOIN pg_catalog.pg_namespace ON pg_catalog.pg_namespace.oid = pg_catalog.pg_class.relnamespace 
+WHERE pg_catalog.pg_class.relname = %(table_name)s AND pg_catalog.pg_class.relkind = ANY (ARRAY[%(param_1)s, %(param_2)s, %(param_3)s, %(param_4)s, %(param_5)s]) AND pg_catalog.pg_table_is_visible(pg_catalog.pg_class.oid) AND pg_catalog.pg_namespace.nspname != %(nspname_1)s
+2025-03-07 23:09:42,636:INFO:[cached since 0.5464s ago] {'table_name': 'shipments', 'param_1': 'r', 'param_2': 'p', 'param_3': 'f', 'param_4': 'v', 'param_5': 'm', 'nspname_1': 'pg_catalog'}
+2025-03-07 23:09:42,835:INFO:SELECT pg_catalog.pg_class.relname 
+FROM pg_catalog.pg_class JOIN pg_catalog.pg_namespace ON pg_catalog.pg_namespace.oid = pg_catalog.pg_class.relnamespace 
+WHERE pg_catalog.pg_class.relname = %(table_name)s AND pg_catalog.pg_class.relkind = ANY (ARRAY[%(param_1)s, %(param_2)s, %(param_3)s, %(param_4)s, %(param_5)s]) AND pg_catalog.pg_table_is_visible(pg_catalog.pg_class.oid) AND pg_catalog.pg_namespace.nspname != %(nspname_1)s
+2025-03-07 23:09:42,835:INFO:[cached since 0.7461s ago] {'table_name': 'employee_activities', 'param_1': 'r', 'param_2': 'p', 'param_3': 'f', 'param_4': 'v', 'param_5': 'm', 'nspname_1': 'pg_catalog'}
+2025-03-07 23:09:43,039:INFO:SELECT pg_catalog.pg_class.relname 
+FROM pg_catalog.pg_class JOIN pg_catalog.pg_namespace ON pg_catalog.pg_namespace.oid = pg_catalog.pg_class.relnamespace 
+WHERE pg_catalog.pg_class.relname = %(table_name)s AND pg_catalog.pg_class.relkind = ANY (ARRAY[%(param_1)s, %(param_2)s, %(param_3)s, %(param_4)s, %(param_5)s]) AND pg_catalog.pg_table_is_visible(pg_catalog.pg_class.oid) AND pg_catalog.pg_namespace.nspname != %(nspname_1)s
+2025-03-07 23:09:43,040:INFO:[cached since 0.9506s ago] {'table_name': 'unmatched_shipments', 'param_1': 'r', 'param_2': 'p', 'param_3': 'f', 'param_4': 'v', 'param_5': 'm', 'nspname_1': 'pg_catalog'}
+2025-03-07 23:09:43,245:INFO:COMMIT
+2025-03-07 23:09:43,489:INFO:BEGIN (implicit)
+2025-03-07 23:09:43,492:INFO:SELECT companies.id AS companies_id, companies.name AS companies_name 
+FROM companies 
+WHERE companies.id = %(id_1)s 
+ LIMIT %(param_1)s
+2025-03-07 23:09:43,493:INFO:[generated in 0.00104s] {'id_1': 1, 'param_1': 1}
+2025-03-07 23:09:43,867:INFO:SELECT employees.id AS employees_id, employees.name AS employees_name, employees.username AS employees_username, employees.password_hash AS employees_password_hash, employees.password_plain AS employees_password_plain, employees.role AS employees_role, employees.company_id AS employees_company_id 
+FROM employees 
+WHERE employees.role = %(role_1)s 
+ LIMIT %(param_1)s
+2025-03-07 23:09:43,868:INFO:[generated in 0.00097s] {'role_1': 'owner', 'param_1': 1}
+2025-03-07 23:09:44,075:INFO:ROLLBACK
+2025-03-07 23:09:44,277:INFO:BEGIN (implicit)
+2025-03-07 23:09:44,281:INFO:SELECT employees.id AS employees_id, employees.name AS employees_name, employees.username AS employees_username, employees.password_hash AS employees_password_hash, employees.password_plain AS employees_password_plain, employees.role AS employees_role, employees.company_id AS employees_company_id 
+FROM employees
+2025-03-07 23:09:44,282:INFO:[generated in 0.00156s] {}
+2025-03-07 23:09:44,782:INFO:ROLLBACK
+2025-03-07 23:09:58,181:INFO:BEGIN (implicit)
+2025-03-07 23:09:58,187:INFO:SELECT employees.id AS employees_id, employees.name AS employees_name, employees.username AS employees_username, employees.password_hash AS employees_password_hash, employees.password_plain AS employees_password_plain, employees.role AS employees_role, employees.company_id AS employees_company_id 
+FROM employees 
+WHERE employees.username = %(username_1)s 
+ LIMIT %(param_1)s
+2025-03-07 23:09:58,189:INFO:[generated in 0.00271s] {'username_1': 'ahmed06', 'param_1': 1}
+2025-03-07 23:09:58,606:INFO:ROLLBACK
