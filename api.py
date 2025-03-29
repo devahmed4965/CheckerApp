@@ -228,5 +228,10 @@ def add_task_message(msg: TaskMessageCreate, db: Session = Depends(get_db)):
     db.commit()
     db.refresh(new_msg)
     return new_msg
+    
+@app.get("/attendance/", response_model=list[AttendanceResponse])
+def get_attendance(db: Session = Depends(get_db)):
+    records = db.query(Attendance).all()
+    return records
 
 # Add any additional endpoints below if needed.
