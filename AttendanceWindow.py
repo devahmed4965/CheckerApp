@@ -14,11 +14,13 @@ ctk.set_default_color_theme("blue")  # You can change this as needed
 def get_cairo_font(size=14, weight="normal"):
     return ctk.CTkFont(family="Cairo", size=size, weight=weight)
 
-cairo_font_header = get_cairo_font(18, "bold")
-
 class AttendanceWindow(ctk.CTkToplevel):
     def __init__(self, parent):
         super().__init__(parent)
+        # Now that the root exists, we can create fonts:
+        self.cairo_font_header = get_cairo_font(18, "bold")
+        self.default_font = get_cairo_font(14)
+        
         self.title("سجل الحضور والانصراف")
         self.geometry("1200x800")
         self.state("zoomed")  # Maximize window
@@ -51,8 +53,8 @@ class AttendanceWindow(ctk.CTkToplevel):
             attendance_icon = None
         
         header_label = ctk.CTkLabel(header_frame, text="سجل الحضور اليومي",
-                                    font=cairo_font_header,
-                                    image=attendance_icon, compound="left")
+                                     font=self.cairo_font_header,
+                                     image=attendance_icon, compound="left")
         header_label.pack(padx=10, pady=10)
         
         # Frame for day buttons
@@ -75,7 +77,7 @@ class AttendanceWindow(ctk.CTkToplevel):
         
         for day in range(1, num_days+1):
             btn = ctk.CTkButton(days_frame, text=str(day), width=40,
-                                font=get_cairo_font(14),
+                                font=self.default_font,
                                 command=lambda d=day: self.load_daily_attendance(d))
             btn.grid(row=0, column=day-1, padx=3, pady=3)
         
@@ -83,7 +85,8 @@ class AttendanceWindow(ctk.CTkToplevel):
         tree_frame = ctk.CTkFrame(daily_tab, corner_radius=10)
         tree_frame.pack(padx=20, pady=10, fill="both", expand=True)
         
-        self.daily_tree = ttk.Treeview(tree_frame, columns=("employee", "check_in", "check_out"), show="headings", height=10)
+        self.daily_tree = ttk.Treeview(tree_frame, columns=("employee", "check_in", "check_out"),
+                                       show="headings", height=10)
         self.daily_tree.heading("employee", text="اسم الموظف")
         self.daily_tree.heading("check_in", text="تسجيل الدخول")
         self.daily_tree.heading("check_out", text="تسجيل الخروج")
@@ -104,7 +107,7 @@ class AttendanceWindow(ctk.CTkToplevel):
             return
 
         print(f"Loading attendance for date: {selected_date}")
-        # Define start and end boundaries for the selected day (assumed stored in UTC)
+        # Define boundaries (adjust if your data is stored in UTC)
         start_dt = datetime.datetime.combine(selected_date, datetime.time.min)
         end_dt = datetime.datetime.combine(selected_date, datetime.time.max)
         print(f"Query range: {start_dt} to {end_dt}")
@@ -116,10 +119,9 @@ class AttendanceWindow(ctk.CTkToplevel):
                 Attendance.timestamp <= end_dt
             ).all()
             print(f"Found {len(records)} records for {selected_date}")
-            # Clear existing entries
+            # Clear the treeview
             for item in self.daily_tree.get_children():
                 self.daily_tree.delete(item)
-            # Insert records into the treeview
             for rec in records:
                 employee = session.query(Employee).filter_by(id=rec.employee_id).first()
                 check_in = rec.timestamp.strftime("%H:%M:%S") if rec.check_type == "check-in" else ""
@@ -147,7 +149,7 @@ class AttendanceWindow(ctk.CTkToplevel):
             print(f"Error loading report icon: {e}")
             report_icon = None
         header_label = ctk.CTkLabel(header_frame, text="السجل الشهري",
-                                    font=cairo_font_header,
+                                    font=self.cairo_font_header,
                                     image=report_icon, compound="left")
         header_label.pack(padx=10, pady=10)
         
@@ -283,7 +285,18 @@ class AttendanceWindow(ctk.CTkToplevel):
             messagebox.showinfo("نجاح", "تم تصدير السجل الشهري بنجاح!")
         except Exception as e:
             messagebox.showerror("خطأ", f"فشل تصدير الملف: {e}")
-
+    
+    # ----------------------------------------------------------------
+    # The remaining functions below (employee management, shipment, etc.)
+    # are not directly related to the attendance functionality.
+    # ----------------------------------------------------------------
+    
+    def logout(self):
+        self.destroy()
+        from login import LoginWindow
+        login_window = LoginWindow()
+        login_window.mainloop()
+    
 if __name__ == "__main__":
     root = tk.Tk()
     root.withdraw()  # Hide the root window
