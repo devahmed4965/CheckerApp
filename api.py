@@ -43,6 +43,9 @@ class LoginResponse(BaseModel):
     role: str
     company_id: int
 
+    class Config:
+        from_attributes = True
+
 @app.post("/login/", response_model=LoginResponse)
 def login(login_req: LoginRequest, db: Session = Depends(get_db)):
     user = db.query(Employee).filter_by(username=login_req.username).first()
@@ -86,7 +89,7 @@ class ShipmentResponse(BaseModel):
     inspected_by: Optional[str] = None
 
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 # Endpoint to search for a shipment by its shipment number.
 # It returns shipment details along with the inspection date and inspector's name.
@@ -130,7 +133,7 @@ class AttendanceResponse(BaseModel):
     longitude: Optional[float] = None
 
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 # Endpoint for recording attendance with validation for employee_id
 @app.post("/attendance/", response_model=AttendanceResponse)
@@ -196,7 +199,7 @@ class TaskResponse(BaseModel):
     status: str
 
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 @app.post("/tasks/", response_model=TaskResponse)
 def create_task(task: TaskCreate, db: Session = Depends(get_db)):
@@ -219,7 +222,7 @@ class TaskMessageResponse(BaseModel):
     message: str
 
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 @app.post("/tasks/messages/", response_model=TaskMessageResponse)
 def add_task_message(msg: TaskMessageCreate, db: Session = Depends(get_db)):
@@ -228,7 +231,7 @@ def add_task_message(msg: TaskMessageCreate, db: Session = Depends(get_db)):
     db.commit()
     db.refresh(new_msg)
     return new_msg
-    
+
 @app.get("/attendance/", response_model=list[AttendanceResponse])
 def get_attendance(db: Session = Depends(get_db)):
     records = db.query(Attendance).all()
