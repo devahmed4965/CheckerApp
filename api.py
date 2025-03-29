@@ -1,7 +1,7 @@
 from fastapi import FastAPI, HTTPException, Depends
 from pydantic import BaseModel
 from sqlalchemy.orm import Session
-from models import SessionLocal, Employee, Shipment, Attendance, Company, Task, OperationTaskMessage  # Ensure all models exist
+from models import SessionLocal, Employee, Shipment, Attendance, Company, Task, OperationTaskMessage
 import datetime
 from typing import Optional
 
@@ -132,9 +132,13 @@ class AttendanceResponse(BaseModel):
     class Config:
         orm_mode = True
 
-# Endpoint for recording attendance
+# Endpoint for recording attendance with validation for employee_id
 @app.post("/attendance/", response_model=AttendanceResponse)
 def record_attendance(record: AttendanceRecord, db: Session = Depends(get_db)):
+    # Check if a valid employee_id is provided (nonzero)
+    if record.employee_id == 0:
+        raise HTTPException(status_code=400, detail="Invalid employee_id provided (0)")
+
     new_record = Attendance(
         employee_id=record.employee_id,
         check_type=record.check_type,
@@ -225,4 +229,4 @@ def add_task_message(msg: TaskMessageCreate, db: Session = Depends(get_db)):
     db.refresh(new_msg)
     return new_msg
 
-# If you want to add more endpoints, do so here.
+# Add any additional endpoints below if needed.
